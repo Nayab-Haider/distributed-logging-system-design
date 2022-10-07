@@ -2,7 +2,8 @@ import java.io.Serializable;
 
 public class Logger implements Cloneable, Serializable {
     private static volatile Logger INSTANCE;
-    private static AbstractLogger abstractLogger;
+    private static volatile AbstractLogger abstractLogger;
+    private static volatile LoggerSubject loggerSubject;
 
     private Logger() {
         if (INSTANCE != null) throw new IllegalStateException("Object already created");
@@ -14,6 +15,7 @@ public class Logger implements Cloneable, Serializable {
                 if (INSTANCE == null) {
                     INSTANCE = new Logger();
                     abstractLogger = LogManager.createAbstractLogger();
+                    loggerSubject = LogManager.buildLoggerSubject();
                 }
             }
         }
@@ -29,7 +31,7 @@ public class Logger implements Cloneable, Serializable {
     }
 
     private void logMessage(int level, String message) {
-        abstractLogger.display(level, message);
+        abstractLogger.display(level, message, loggerSubject);
     }
 
     public void info(String message) {

@@ -5,7 +5,8 @@ public class DebugLog extends AbstractLogger {
     }
 
     @Override
-    protected void logMessage(String message) {
-        System.out.println("DEBUG:" + message);
+    protected void logMessage(String message, LoggerSubject loggerSubject) {
+        message = "DEBUG:" + message;
+        loggerSubject.notifyAllObserver(3, message);
     }
 }

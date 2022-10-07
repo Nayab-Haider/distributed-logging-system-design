@@ -5,7 +5,8 @@ public class InfoLog extends AbstractLogger {
     }
 
     @Override
-    protected void logMessage(String message) {
-        System.out.println("INFO:" + message);
+    protected void logMessage(String message, LoggerSubject loggerSubject) {
+        message = "INFO:" + message;
+        loggerSubject.notifyAllObserver(1, message);
     }
 }
